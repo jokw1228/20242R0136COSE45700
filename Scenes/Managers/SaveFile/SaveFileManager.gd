@@ -7,12 +7,12 @@ var is_need_to_load: bool = false
 
 const SAVE_PATH = "res://IWBTU_savefile.dat" #"user://IWBTU_savefile.dat"
 
-const NewStart_room = "res://Scenes/Rooms/RoomStage1_1.tscn"
+const NewStart_room = "res://Scenes/Rooms/RoomStage0_1.tscn"
 
 func save_game(save_room, save_position):
 	var save_data = {
 		"save_room" : save_room,
-		"save_position" : save_position
+		"save_position" : save_position,
 	}
 	var save_file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	var jstr = JSON.stringify(save_data)

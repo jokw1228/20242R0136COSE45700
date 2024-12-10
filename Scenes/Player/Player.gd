@@ -190,8 +190,8 @@ func _input(_event):
 		player_shoot()
 	
 	if Input.is_action_just_pressed(input_restart):
-		#kill_player()
-		SaveFileManager.load_game()
+		kill_player()
+		#SaveFileManager.load_game()
 
 
 func _physics_process(delta):

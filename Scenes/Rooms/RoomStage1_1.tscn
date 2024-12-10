@@ -1,13 +1,17 @@
-[gd_scene load_steps=39 format=3 uid="uid://c3m4dm2ytmgd2"]
+[gd_scene load_steps=44 format=3 uid="uid://c3m4dm2ytmgd2"]
 
+[ext_resource type="PackedScene" uid="uid://d2m13a8fyk3v1" path="res://Scenes/Items/StageBGM/StageBgm.tscn" id="1_3qcjh"]
 [ext_resource type="PackedScene" uid="uid://g5uiqkeis1bc" path="res://Scenes/TileMaps/BackGround1.tscn" id="1_f4t8o"]
 [ext_resource type="PackedScene" uid="uid://d4iisx858y4co" path="res://Scenes/Player/PlayerSpawner.tscn" id="1_xwmy7"]
+[ext_resource type="AudioStream" uid="uid://2cmm4xbl1mhc" path="res://Resources/Sounds/BGM/bgm_stage1.wav" id="2_08lru"]
 [ext_resource type="PackedScene" uid="uid://ct21fcu5al8eq" path="res://Scenes/Items/Cameras/CameraLock.tscn" id="2_40c4l"]
 [ext_resource type="PackedScene" uid="uid://1kdhl0avp55s" path="res://Scenes/TileMaps/TileMapGround2.tscn" id="3_65bvr"]
 [ext_resource type="PackedScene" uid="uid://d25vehfudqlvb" path="res://Scenes/Items/SavePoint/SavePoint.tscn" id="4_4ssid"]
 [ext_resource type="PackedScene" uid="uid://d3kvujmdn05tj" path="res://Scenes/Spikes/SpikeUp16.tscn" id="5_emxbb"]
 [ext_resource type="PackedScene" uid="uid://cygo3s32tr1xt" path="res://Scenes/Items/InGameTexts/InGameText.tscn" id="6_jp2he"]
 [ext_resource type="PackedScene" uid="uid://7vf40w4mmlbp" path="res://Scenes/Items/SwitchBlock/SwitchBlock.tscn" id="6_jt1yk"]
+[ext_resource type="PackedScene" uid="uid://dqxybdye7nyhp" path="res://Scenes/Items/PlayerWarp/PlayerWarp.tscn" id="6_tquqt"]
+[ext_resource type="PackedScene" uid="uid://dkyuca6sjdabc" path="res://Scenes/Rooms/RoomStage1_2.tscn" id="7_6hoo8"]
 [ext_resource type="PackedScene" uid="uid://cbaj370ggnqr8" path="res://Scenes/TileMaps/TileMapBlockWithNoPhysics.tscn" id="9_72rrf"]
 [ext_resource type="PackedScene" uid="uid://dhwk184241m3i" path="res://Scenes/Spikes/SpikeDown8.tscn" id="9_puhtn"]
 [ext_resource type="PackedScene" uid="uid://b03qp1gnvrqsl" path="res://Scenes/Spikes/SpikeUp8.tscn" id="10_cmp1j"]
@@ -230,7 +234,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4brmh"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ag5fs"]
+size = Vector2(10, 32)
+
 [node name="RoomStage1_1" type="Node2D"]
+
+[node name="StageBGM" parent="." instance=ExtResource("1_3qcjh")]
+bgm = ExtResource("2_08lru")
 
 [node name="CameraLock" parent="." instance=ExtResource("2_40c4l")]
 RoomSize = Vector2(960, 176)
@@ -603,6 +613,13 @@ layer_0/tile_data = PackedInt32Array(-1, 65537, 0, 65535, 1, 0, 0, 131073, 0, -6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Switch5/AnimatableBody2D"]
 shape = SubResource("RectangleShape2D_4brmh")
+
+[node name="PlayerWarp" parent="." instance=ExtResource("6_tquqt")]
+position = Vector2(976, 104)
+RoomToGo_room = ExtResource("7_6hoo8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerWarp"]
+shape = SubResource("RectangleShape2D_ag5fs")
 
 [connection signal="switched" from="Switch1/SwitchBlock" to="Switch1/AnimationPlayer" method="_on_switch_block_switched"]
 [connection signal="switched" from="Switch2/SwitchBlock" to="Switch2/AnimationPlayer" method="_on_switch_block_switched"]

@@ -1,0 +1,112 @@
+[gd_scene load_steps=22 format=3 uid="uid://dd6ch60up46wh"]
+
+[ext_resource type="Script" path="res://Scenes/Bosses/Boss1/Boss1.gd" id="1_hgkg1"]
+[ext_resource type="PackedScene" uid="uid://dvucbk1qkfpiq" path="res://Scenes/Bosses/Boss1/Boss1Bullet.tscn" id="2_kid0i"]
+[ext_resource type="PackedScene" uid="uid://ca1q0tiepf4n1" path="res://Scenes/Bosses/Boss1/MuShootEffectGenerator.tscn" id="2_nynpc"]
+[ext_resource type="PackedScene" uid="uid://xhmrya20uoau" path="res://Scenes/Bosses/Boss1/Boss1EnergyBall.tscn" id="3_41le7"]
+[ext_resource type="Texture2D" uid="uid://jcj34hwlepfm" path="res://Resources/Sprites/Mu/sprite_mu_idle.png" id="4_4cr7s"]
+[ext_resource type="Texture2D" uid="uid://cc2dtms15nl5l" path="res://Resources/Sprites/Mu/sprite_mu_landing.png" id="5_7qbsk"]
+[ext_resource type="PackedScene" uid="uid://dg3ha7l21h8bd" path="res://Scenes/Bosses/Boss1/Boss1Rock.tscn" id="5_54cyw"]
+[ext_resource type="PackedScene" uid="uid://dtm07uhwo23kx" path="res://Scenes/Bosses/Boss1/Boss1FallingSpike.tscn" id="6_elqb0"]
+[ext_resource type="Texture2D" uid="uid://ci6ae0vghdqwo" path="res://Resources/Sprites/Mu/sprite_mu_laser.png" id="6_twg2m"]
+[ext_resource type="PackedScene" uid="uid://c8f28q1my7d0u" path="res://Scenes/Bosses/Boss1/Boss1DeadBody.tscn" id="7_1067u"]
+[ext_resource type="AudioStream" uid="uid://bmjme3r3nleq7" path="res://Resources/Sounds/SFX/Mu/sfx_mu_laser.wav" id="7_be80w"]
+[ext_resource type="AudioStream" uid="uid://bxnqwb5gv4d7o" path="res://Resources/Sounds/SFX/Mu/sfx_mu_charging.wav" id="9_jb0hw"]
+[ext_resource type="Texture2D" uid="uid://ff1qe5ppl1ep" path="res://Resources/Sprites/Mu/sprite_mu_jump_up.png" id="10_2b2ht"]
+[ext_resource type="Script" path="res://Scenes/Killer/KillerArea2D.gd" id="11_cshcq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sactj"]
+radius = 3.5
+height = 11.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61wsj"]
+atlas = ExtResource("5_7qbsk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rf0y"]
+atlas = ExtResource("5_7qbsk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ginn3"]
+atlas = ExtResource("5_7qbsk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7mx0"]
+atlas = ExtResource("5_7qbsk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_go200"]
+atlas = ExtResource("10_2b2ht")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cl45y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4cr7s")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61wsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rf0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ginn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7mx0")
+}],
+"loop": false,
+"name": &"landing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_twg2m")
+}],
+"loop": true,
+"name": &"laser",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_go200")
+}],
+"loop": true,
+"name": &"rising",
+"speed": 5.0
+}]
+
+[node name="Boss1" type="Area2D" node_paths=PackedStringArray("Sprite_node")]
+script = ExtResource("1_hgkg1")
+Sprite_node = NodePath("AnimatedSprite2D")
+audio_laser = ExtResource("7_be80w")
+audio_charging = ExtResource("9_jb0hw")
+MuShootEffect_scene = ExtResource("2_nynpc")
+Boss1Bullet_scene = ExtResource("2_kid0i")
+Boss1EnergyBall_scene = ExtResource("3_41le7")
+Boss1Rock_scene = ExtResource("5_54cyw")
+Boss1FallingSpike_scene = ExtResource("6_elqb0")
+Boss1DeadBody_scene = ExtResource("7_1067u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_sactj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cl45y")
+animation = &"rising"
+
+[node name="KillerArea2D" type="Area2D" parent="."]
+script = ExtResource("11_cshcq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillerArea2D"]
+shape = SubResource("CapsuleShape2D_sactj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="KillerArea2D" to="KillerArea2D" method="_on_area_entered"]
