@@ -579,9 +579,6 @@ position = Vector2(892, 68)
 [node name="SpikeRight9" parent="Switch5/SwitchBlock/Spikes" instance=ExtResource("12_hygel")]
 position = Vector2(892, 76)
 
-[node name="SpikeDown10" parent="Switch5/SwitchBlock/Spikes" instance=ExtResource("9_puhtn")]
-position = Vector2(932, 92)
-
 [node name="SpikeUp16" parent="Switch5/SwitchBlock/Spikes" instance=ExtResource("5_emxbb")]
 position = Vector2(904, 144)
 

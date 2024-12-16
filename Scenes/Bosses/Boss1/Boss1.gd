@@ -11,8 +11,8 @@ extends Area2D
 
 @export var Boss1DeadBody_scene: PackedScene
 
-var hp_max = 100
-var hp = 100
+var hp_max = 60
+var hp = 60
 signal hp_changed(hp, hp_max)
 signal boss_die()
 
@@ -29,6 +29,9 @@ func _ready():
 	emit_signal("hp_changed", hp, hp_max)
 	await get_tree().create_timer(1.0).timeout
 	pattern_ready()
+	
+	var players: Array[Node] = get_tree().get_nodes_in_group("Player")
+	players[0].killed.connect(queue_free)
 
 func _process(_delta):
 	var player = get_tree().get_nodes_in_group("Player")
@@ -168,9 +171,9 @@ func pattern_1():
 	CameraManager.apply_shake(15.0, 3.0)
 	
 	#barrage
-	create_spinning_barrage(rising_duration, 36, randi(), 32 * choose_pos_or_neg(), 128)
-	create_spinning_barrage(rising_duration, 88, randi(), 24 * choose_pos_or_neg(), 64)
-	create_spinning_barrage(rising_duration, 24, randi(), 96 * choose_pos_or_neg(), 196)
+	create_spinning_barrage(rising_duration, 36, randi(), 128 * choose_pos_or_neg(), 128)
+	create_spinning_barrage(rising_duration, 48, randi(), 64 * choose_pos_or_neg(), 64)
+	create_spinning_barrage(rising_duration, 24, randi(), 96 * choose_pos_or_neg(), 64)
 	
 	await tween.finished
 	
@@ -226,9 +229,9 @@ func pattern_2():
 		get_tree().current_scene.add_child(inst)
 		await get_tree().create_timer(0.5).timeout
 	
-	for i in range(10):
+	for i in range(8):
 		var inst1 = Boss1FallingSpike_scene.instantiate()
-		inst1.position = Vector2(i * 320 / 10 + 16 + (randf() - 0.5) * 6, -16)
+		inst1.position = Vector2(i * 320 / 8 + 16 + (randf() - 0.5) * 6, -16)
 		get_tree().current_scene.add_child(inst1)
 	
 	#end
